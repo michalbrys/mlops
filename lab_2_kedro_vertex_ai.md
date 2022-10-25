@@ -144,8 +144,6 @@ If you want to save a specific intermediate file, you need to specify a `DataCat
 # kedro vertexai init <GCP PROJECT ID> <GCP REGION>, for example:
 
 kedro vertexai init gid-ml-ops-sandbox europe-west1
-
-kedro vertexai init bqml-workshops europe-west1
 ``` 
 The plugin will create `conf/base/vertexai.yaml` with the VertexAI config.
 
@@ -158,8 +156,7 @@ Important: here you set the Docker image name:tag you'll create in the next step
 
 image: remote.repo.url.com/vertex-ai-plugin-demo:latest
 
-# i.e. image: gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20220928
-# i.e. image: europe-west1-docker.pkg.dev/bqml-workshops/bqml-workshops-docker-repository/spaceflights-tutorial-mb:20221014
+# i.e. image: gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20221025
 
 # key should point to the GCS bucket that will be used internally by  Vertex AI, for example:
 
