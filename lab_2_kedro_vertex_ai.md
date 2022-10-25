@@ -176,11 +176,8 @@ docker build \
 ```
 Push the Docker image to the remoe repository to allow pull it to Vertex AI
 ```
-docker tag spaceflights:latest remote.repo.url.com/vertex-ai-plugin-demo:latest
 docker push remote.repo.url.com/spaceflights:latest
-```
-  
-```
+
 # For example
 docker push gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20221025
 ```
