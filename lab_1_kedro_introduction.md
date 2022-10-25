@@ -34,6 +34,8 @@ virtualenv workshop-env --python=python3.9
 
 # Activate the virtualenv
 source workshop-env/bin/activate
+#Windows
+.\workshop-env\Scripts\activate
 
 # Go to the working directory
 cd workshop
