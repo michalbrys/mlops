@@ -1,14 +1,14 @@
 # Kedro - a framework to structure your ML pipeline
 
-Last revision: 2022-10-25 
+Last revision: 2023-03-24 
   
-Python 3.9, Kedro 0.18.2
+Python 3.9, Kedro 0.18.7
 
 ## Description
 The goal of this exercise is to create your first ML pipeline using Kedro framework.
 We’ll use the spaceflights model to predict.  
 
-From [Kedro project page](https://kedro.readthedocs.io/en/0.18.2/tutorial/spaceflights_tutorial.html):
+From [Kedro project page](https://kedro.readthedocs.io/en/0.18.7/tutorial/spaceflights_tutorial.html):
 
 Scenario: *It is 2160 and the space tourism industry is booming. Globally, there are thousands of space shuttle companies taking tourists to the Moon and back. You have been able to source amenities offered in each space shuttle, customer reviews and company information.*
 
@@ -49,10 +49,10 @@ conda deactivate
 ```
 
 ### Step 2: Install Kedro
-Note: remember use Kedro in the specific version: `kedro==0.18.2`
+Note: remember use Kedro in the specific version: `kedro==0.18.7`
 ```
 # Install the Kedro Python package in the virtual environment
-pip install 'kedro==0.18.2'
+pip install 'kedro==0.18.7'
 ```
 
 ### Step 3: Create a new ML pipeline using kedro starter
@@ -123,6 +123,16 @@ cd spaceflights
 pip install -r src/requirements.txt
 ```
 
+Note for Mac users: if you encounter the following error:
+``
+× Encountered error while trying to install package.
+╰─> greenlet
+```
+Fix it by this command:
+```
+xcode-select --install
+```
+
 ### Step 5: Walk through the code
 
 Let’s take a look at the pipeline structure and Kedro framework concepts.
@@ -130,14 +140,14 @@ Walk through the created files (no changes needed now).
 Evaluate pipeline config files, especially the [DataCatalog](https://kedro.readthedocs.io/en/stable/data/data_catalog.html)
 
 ```
-ls conf/base/*
+ls -l conf/base/*
 
 cat conf/base/catalog.yml
 ``` 
 
 Evaluate the Kedro [data engineering convention](https://kedro.readthedocs.io/en/stable/faq/faq.html#what-is-data-engineering-convention)
 ```
-ls data/
+ls -l data/
 ```
 
 Evaluate the pipelines definitions (Data Processing, Data Science)
@@ -201,31 +211,24 @@ kedro run
 Expected output:
 ```
 …  
-                    INFO     Running node: evaluate_model_node:                                          node.py:327
-                             evaluate_model([data_science.active_modelling_pipeline.regressor,data_scien            
-                             ce.active_modelling_pipeline.X_test,data_science.active_modelling_pipeline.            
-                             y_test]) -> None                                                                       
-                    INFO     Model has a coefficient R^2 of 0.462 on test data.                          nodes.py:55
-                    INFO     Completed 8 out of 9 tasks                                      sequential_runner.py:85
-                    INFO     Loading data from                                                   data_catalog.py:343
-                             'data_science.candidate_modelling_pipeline.regressor'                                  
-                             (PickleDataSet)...                                                                     
-                    INFO     Loading data from                                                   data_catalog.py:343
-                             'data_science.candidate_modelling_pipeline.X_test'                                     
-                             (MemoryDataSet)...                                                                     
-                    INFO     Loading data from                                                   data_catalog.py:343
-                             'data_science.candidate_modelling_pipeline.y_test'                                     
-                             (MemoryDataSet)...                                                                     
-                    INFO     Running node: evaluate_model_node:                                          node.py:327
-                             evaluate_model([data_science.candidate_modelling_pipeline.regressor,data_sc            
-                             ience.candidate_modelling_pipeline.X_test,data_science.candidate_modelling_            
-                             pipeline.y_test]) -> None                                                              
-                    INFO     Model has a coefficient R^2 of 0.449 on test data.                          nodes.py:55
-                    INFO     Completed 9 out of 9 tasks                                      sequential_runner.py:85
-                    INFO     Pipeline execution completed successfully.                                 runner.py:89
+		    INFO     Completed 4 out of 6 tasks                                 sequential_runner.py:85
+                    INFO     Loading data from 'X_train' (MemoryDataSet)...                 data_catalog.py:343
+                    INFO     Loading data from 'y_train' (MemoryDataSet)...                 data_catalog.py:343
+                    INFO     Running node: train_model_node: train_model([X_train,y_train]) ->      node.py:329
+                             [regressor]                                                                       
+                    INFO     Saving data to 'regressor' (PickleDataSet)...                  data_catalog.py:382
+                    INFO     Completed 5 out of 6 tasks                                 sequential_runner.py:85
+                    INFO     Loading data from 'regressor' (PickleDataSet)...               data_catalog.py:343
+                    INFO     Loading data from 'X_test' (MemoryDataSet)...                  data_catalog.py:343
+                    INFO     Loading data from 'y_test' (MemoryDataSet)...                  data_catalog.py:343
+                    INFO     Running node: evaluate_model_node:                                     node.py:329
+                             evaluate_model([regressor,X_test,y_test]) -> None                                 
+[03/24/23 11:34:12] INFO     Model has a coefficient R^2 of 0.462 on test data.                     nodes.py:55
+                    INFO     Completed 6 out of 6 tasks                                 sequential_runner.py:85
+                    INFO     Pipeline execution completed successfully.                            runner.py:93
 ```
 
-You may evaluate outputs produced by the pipeline in /data directory. For now, most datasets are MemoryDatasets, so they’re not materialized here. We’ll change it in the next steps.
+You may evaluate outputs produced by the pipeline in /data directory.
 
 
 ### Step 8: Modify the pipeline
@@ -276,7 +279,7 @@ You'll see one more model accuracy metric in logs.
 	- `kedro jupyter lab`
 	- `kedro ipython`
 
--  Experiment with model features for candidate model  
+-  Experiment with model features
 	* See: `conf/base/parameters/data_science.yml`
 
 -   Implement the other model type
@@ -284,9 +287,6 @@ You'll see one more model accuracy metric in logs.
 
 -   Improve your model accuracy
 	-  See: `src/spaceflights/pipelines/data_science/nodes.py`
-    
--   Setup the version control:
-	- [https://kedro.readthedocs.io/en/stable/tutorial/spaceflights_tutorial.html#optional-git-workflow](https://kedro.readthedocs.io/en/stable/tutorial/spaceflights_tutorial.html#optional-git-workflow)
 
 -   Setup experiment tracking    
 	* [https://kedro.readthedocs.io/en/stable/tutorial/set_up_experiment_tracking.html](https://kedro.readthedocs.io/en/stable/tutorial/set_up_experiment_tracking.html)
