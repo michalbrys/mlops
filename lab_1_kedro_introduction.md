@@ -2,7 +2,7 @@
 
 Last revision: 2023-03-24 
   
-Python 3.9, Kedro 0.18.7
+Python 3.9, Kedro 0.18.4
 
 ## Description
 The goal of this exercise is to create your first ML pipeline using Kedro framework.
@@ -49,10 +49,10 @@ conda deactivate
 ```
 
 ### Step 2: Install Kedro
-Note: remember use Kedro in the specific version: `kedro==0.18.7`
+Note: remember use Kedro in the specific version: `kedro==0.18.4`
 ```
 # Install the Kedro Python package in the virtual environment
-pip install 'kedro==0.18.7'
+pip install 'kedro==0.18.4'
 ```
 
 ### Step 3: Create a new ML pipeline using kedro starter
