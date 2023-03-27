@@ -9,7 +9,7 @@ Python 3.9, Kedro 0.18.4
 The goal of this exercise is to create your first ML pipeline using Kedro framework.
 We’ll use the spaceflights model to predict.  
 
-From [Kedro project page](https://kedro.readthedocs.io/en/0.18.7/tutorial/spaceflights_tutorial.html):</br>
+From [Kedro project page](https://kedro.readthedocs.io/en/0.18.4/tutorial/spaceflights_tutorial.html):</br>
 Scenario: *It is 2160 and the space tourism industry is booming. Globally, there are thousands of space shuttle companies taking tourists to the Moon and back. You have been able to source amenities offered in each space shuttle, customer reviews and company information.*
 
 ### Project
