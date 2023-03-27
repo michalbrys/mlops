@@ -5,19 +5,20 @@ Last revision: 2023-03-24
 Python 3.9, Kedro 0.18.4,  Kedro-VertexAI 0.8.1
 
 See the plugin documentation:
-https://kedro-vertexai.readthedocs.io/en/0.8.1/source/02_installation/01_installation.html
+<https://kedro-vertexai.readthedocs.io/en/0.8.1/source/02_installation/01_installation.html>
 
-## Pre-requisites:
+## Pre-requisites
 
--   A Google Cloud Platform project
--   A Google Cloud Storage bucket
--   A GCP Service Account with roles:
-	- Service Account User
-	- Storage Admin
-	- Vertex AI Administrator
--   GCloud SDK installed
--   Docker installed
+- A Google Cloud Platform project
+- A Google Cloud Storage bucket
+- A GCP Service Account with roles:
+  - Service Account User
+  - Storage Admin
+  - Vertex AI Administrator
+- GCloud SDK installed
+- Docker installed
 
+---
 
 ## Vertex AI (lab)
   
@@ -29,14 +30,14 @@ The first step is to install required plugins.
 
 Go to `src/requirements.txt` and add the following lines
 
-```
+```text
 kedro-vertexai==0.8.1
 kedro-docker==0.3.1
 ```
   
 Note: Be sure that you’ve got your virtual environment activated.
 
-``` 
+```sh
 # Make sure you’re in your project’s main folder
 
 cd spaceflights
@@ -47,10 +48,13 @@ pip install -r src/requirements.txt
 
 Check if the plugins were installed correctly:
 
-```
-#run this command  
+```sh
 kedro vertexai
+```
 
+Output:
+
+```text
 Usage: kedro vertexai [OPTIONS] COMMAND [ARGS]...
 
   Interact with Google Cloud Platform :: Vertex AI Pipelines
@@ -97,11 +101,14 @@ Commands:
 
 Make sure the Docker daemon is running.  
 Initialize the Docker container for your pipeline
-```
+
+```sh
 kedro docker init
 ```
+
 Modify the `.dockerignore` file by adding the following line to include the input data inside the container.
-```
+
+```text
 # in .dockerignore
 !data/01_raw
 ```
@@ -110,10 +117,11 @@ Modify the `.dockerignore` file by adding the following line to include the inpu
 
 Now, let's upadate the `DataCatalog` to be compatible with Vertex AI
   
-Instructions and the example `catalog.yaml` content: https://kedro-vertexai.readthedocs.io/en/0.8.1/source/03_getting_started/01_quickstart.html#adjusting-data-catalog-to-be-compatible-with-vertex-ai
+Instructions and the example `catalog.yaml` content: <https://kedro-vertexai.readthedocs.io/en/0.8.1/source/03_getting_started/01_quickstart.html#adjusting-data-catalog-to-be-compatible-with-vertex-ai>
 
 You need to **replace** the whole content of `catalog.yaml` with:
-```
+
+```yaml
 companies:
   type: pandas.CSVDataSet
   filepath: data/01_raw/companies.csv
@@ -129,30 +137,34 @@ shuttles:
   filepath: data/01_raw/shuttles.xlsx
   layer: raw
 ```
+
 Your intermediate data will be stored in the GCS bucket set for the staging data in the `*.bin format`.
 If you want to save a specific intermediate file, you need to specify a `DataCatalog` entry with the GCP path (`gs://...`)
 
-
 ### Step 5: Init the VertexAI pipeline definition
-```
+
+```sh
 # kedro vertexai init <GCP PROJECT ID> <GCP REGION>, for example:
 
 kedro vertexai init gid-ml-ops-sandbox europe-west1
-``` 
+```
+
 The plugin will create `conf/base/vertexai.yaml` with the VertexAI config.
 
-
 ### Step 6: Adjust the `conf/base/vertexai.yaml` config
-Important: here you set the Docker image name:tag you'll create in the next step.
-```
-# key should point to the full image name, for example 
-(if you pushed the image at this name):
+
+Important: here you set the Docker image `name:tag` you'll create in the next step.
+
+```sh
+# key should point to the full image name, for example (if you pushed the image at this name):
 
 image: remote.repo.url.com/vertex-ai-plugin-demo:latest
 
 # i.e. image: gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20230324
+```
 
-# key should point to the GCS bucket that will be used internally by  Vertex AI, for example:
+```sh
+# key should point to the GCS bucket that will be used internally by Vertex AI, for example:
 
 root: <your_bucket_name>/<subfolder-for-vertexai>
 
@@ -160,32 +172,35 @@ root: <your_bucket_name>/<subfolder-for-vertexai>
 ```
 
 ### Step 7: Build the Docker image
- 
 
 Build the Docker image
-```
+
+```sh
 docker build \
-	-t gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20230324 \
-	.
+ -t gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20230324 \
+ .
 ```
-Push the Docker image to the remoe repository to allow pull it to Vertex AI
-```
+
+Push the Docker image to the remote repository to allow it to be pulled on Vertex AI
+
+```sh
 docker push remote.repo.url.com/spaceflights:latest
 
 # For example
-docker push gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20230324
+# docker push gcr.io/gid-ml-ops-sandbox/spaceflights-tutorial-mb:20230324
 ```
 
 ### Step 8: Run the pipeline on VertexAI
 
 Now, you can schedule your pipeline for the execution on VertexAI Pipelines
 
-```
+```sh
 kedro vertexai run-once
 ```
 
 Expected output:
-```
+
+```text
 See the Pipeline job here: https://console.cloud.google.com/vertex-ai/locations/europe-west1/pipelines/runs/spaceflights-20220902115029?project=gid-ml-ops-sandbox
 Intermediate data datasets will be stored in
 gs://mb-temp/mlops-webinar-demo/kedro-vertexai-temp/spaceflights-20220902115029/*.bin
