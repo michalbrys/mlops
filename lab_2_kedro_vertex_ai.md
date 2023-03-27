@@ -1,6 +1,6 @@
 # Vertex AI Pipelines (lab)
 
-Last revision: 2023-03-24
+Last revision: 2023-03-27
   
 Python 3.9, Kedro 0.18.4,  Kedro-VertexAI 0.8.1
 
