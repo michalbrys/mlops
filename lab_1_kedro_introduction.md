@@ -66,7 +66,7 @@ Note: remember to use Kedro in the specific version: `kedro==0.18.13`
 
 ```sh
 # Install the Kedro Python package in the virtual environment
-pip install 'kedro==0.18.4'
+pip install 'kedro==0.18.13'
 ```
 
 ### Step 3: Create a new ML pipeline using kedro starter
