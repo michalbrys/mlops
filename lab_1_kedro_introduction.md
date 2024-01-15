@@ -62,7 +62,7 @@ conda deactivate
 
 ### Step 2: Install Kedro
 
-Note: remember to use Kedro in the specific version: `kedro==0.18.4`
+Note: remember to use Kedro in the specific version: `kedro==0.18.13`
 
 ```sh
 # Install the Kedro Python package in the virtual environment
