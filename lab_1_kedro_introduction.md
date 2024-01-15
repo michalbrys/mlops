@@ -1,8 +1,8 @@
 # Kedro - a framework to structure your ML pipeline
 
-Last revision: 2023-03-27
+Last revision: 2024-01-15
   
-Python 3.9, Kedro 0.18.4
+Python 3.9, Kedro 0.18.13
 
 ## Description
 
